@@ -1,3 +1,5 @@
+# https://github.com/openai/gym/blob/master/examples/agents/random_agent.py
+# https://github.com/openai/gym/blob/edd0552c1d2f28ff1c46e078bdbfe57ddb5f568e/docs/agents.md
 import argparse
 import sys
 
@@ -36,17 +38,22 @@ if __name__ == '__main__':
     reward = 0
     done = False
 
-    for i in range(5):
-        for i in range(episode_count):
-            ob = env.reset()
-            while True:
-                action = agent.act(ob, reward, done)
-                ob, reward, done, _ = env.step(action)
-                if done:
-                    break
+    for i in range(episode_count):
+        print(i)
+        ob = env.reset()
+        while True:
+            env.render()
+            action = agent.act(ob, reward, done)
+
+            ob, reward, done, _ = env.step(action)
+            if done:
+                env.close()
+                break
+
             # Note there's no env.render() here. But the environment still can open window and
             # render if asked by env.monitor: it calls env.render('rgb_array') to record video.
             # Video is not recorded every episode, see capped_cubic_video_schedule for details.
 
-            # Close the env and write monitor result info to disk
-            env.close()
+    # Close the env and write monitor result info to disk
+    # env.close()
+    # env.env.close()
