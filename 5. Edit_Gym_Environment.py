@@ -1,12 +1,5 @@
-# Based on http://gym.openai.com/docs/
-# Based on https://github.com/openai/gym/blob/edd0552c1d2f28ff1c46e078bdbfe57ddb5f568e/docs/agents.md
-# https://github.com/openai/gym/blob/master/gym/envs/__init__.py
-# https://github.com/openai/gym/blob/master/gym/envs/registration.py
-
 import gym
-import sys
 from gym.envs.registration import register
-from gym import wrappers,logger
 from colorama import init
 import time
 
@@ -18,26 +11,29 @@ register(
     kwargs={'map_name': '4x4', 'is_slippery': False}
 )
 
+# gym 환경(env)에 대해 정의를 할 때에는 gym.make('spec.id')를 사용한다.
+# 환경을 수정하고 싶으면 register 정의
+
 env = gym.make('FrozenLake-v3')
 
 for i in range(3):
-    cnt = 0
     reward = 0
     env.reset() # 게임 상태를 초기화
+    start_time = time.time()
+    cnt = 0
     while True:
-        cnt = cnt + 1
-        env.render() # 게임을 화면에 보여줌
-        # env.render(mode='rgb_array')
+        cnt = cnt+1
+        env.render(mode='human') # 게임을 화면에 보여줌, env.render(mode='rgb_array')
         action = env.action_space.sample() # 랜덤액션
         state, reward, done, info = env.step(action) # 주어진 상태에서 랜덤액션 실행
-        time.sleep(0.3) # 사람에게 보여질 수 있는 빠르기
-
+        time.sleep(0.05) # 사람에게 보여질 수 있는 빠르기
         #print("State: ", state, "Action: ", action, "Reward: ", reward, "Info: ", info)
         reward += reward
 
         if done:
-            print("Episode Finished with reward", reward)
-            print("Episode finished after {} timesteps".format(cnt + 1))
+            e = int(time.time() - start_time)
+            print('{:02d}:{:02d}:{:02d}'.format(e // 3600, (e % 3600 // 60), e % 60))
+            print('{0:.2f} seconds'.format(e%(60)))
+            print('{0} step'.format(cnt))
             env.close()
             break
-

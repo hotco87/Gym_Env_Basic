@@ -4,7 +4,8 @@
 from __future__ import print_function
 import sys, gym, time
 
-# python keyboard_agent.py SpaceInvadersNoFrameskip-v4
+# Usage-cmd: python keyboard_agent.py SpaceInvadersNoFrameskip-v4
+# Continous Action에 대해서는 지원하지 않음.
 
 env = gym.make('MsPacmanNoFrameskip-v0' if len(sys.argv)<2 else sys.argv[1])
 

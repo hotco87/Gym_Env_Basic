@@ -1,4 +1,5 @@
 # Based on https://github.com/openai/gym/blob/master/gym/utils/play.py
+# Continous Action에 대해서는 지원하지 않음.
 
 import gym
 import pygame
